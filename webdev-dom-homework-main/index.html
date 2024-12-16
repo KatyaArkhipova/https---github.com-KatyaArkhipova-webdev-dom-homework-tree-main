@@ -8,7 +8,7 @@
 
   <body>
     <div class="container">
-      <ul class="comments">
+      <ul class="comments" id="comments-list">
         <li class="comment">
           <div class="comment-header">
             <div>Глеб Фокин</div>
@@ -39,7 +39,7 @@
           <div class="comment-footer">
             <div class="likes">
               <span class="likes-counter">75</span>
-              <button class="like-button -active-like"></button>
+              <button class="like-button-active-like"></button>
             </div>
           </div>
         </li>
@@ -57,15 +57,56 @@
           rows="4"
         ></textarea>
         <div class="add-form-row">
-          <button class="add-form-button">Написать</button>
+          <button class="add-form-button" id="add-comment-button">Написать</button>
         </div>
       </div>
     </div>
   </body>
 
   <script>
-    "use strict";
-    // Код писать здесь
-    console.log("It works!");
-  </script>
+    
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    
+    const commentsList = document.getElementById('comments-list');
+    const addCommentButton = document.getElementById('add-comment-button');
+    const nameInput = document.querySelector('.add-form-name');
+    const commentInput = document.querySelector('.add-form-text');
+
+    
+    addCommentButton.addEventListener('click', function () {
+      
+      if (!nameInput.value || !commentInput.value) {
+        alert('Пожалуйста, заполните все поля.');
+        return;
+      }
+
+      
+      const currentDate = new Date().toLocaleString();
+
+      
+      const newComment = ` <li class="comment"> 
+        <div class="comment-header"> 
+          <div>${nameInput.value}</div> 
+          <div>${currentDate}</div> 
+          </div> 
+          <div class="comment-body"> 
+          <div class="comment-text"> ${commentInput.value} </div> </div> 
+          <div class="comment-footer"> 
+          <div class="likes"> 
+            <span class="likes-counter">0</span> 
+          <button class="like-button"></button> 
+          </div> 
+          </div> 
+          </li> `;
+
+      
+          commentsList.innerHTML += newComment;
+
+      
+      nameInput.value = '';
+      commentInput.value = '';
+    });
+  });
+</script>
 </html>
