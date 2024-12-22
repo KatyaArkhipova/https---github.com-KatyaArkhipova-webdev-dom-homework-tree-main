@@ -66,107 +66,89 @@
   <script>
     
   
-  document.addEventListener("DOMContentLoaded", function () {
-    
-    const commentsList = document.getElementById('comments-list');
-    const addCommentButton = document.getElementById('add-comment-button');
-    const nameInput = document.querySelector('.add-form-name');
-    const commentInput = document.querySelector('.add-form-text');
+    const comments = [
+            {
+                name: "Глеб Фокин",
+                date: "12.02.22 12:18",
+                text: "Это будет первый комментарий на этой странице",
+                likes: 3,
+                liked: false
+            },
+            {
+                name: "Варвара Н.",
+                date: "13.02.22 19:22",
+                text: "Мне нравится как оформлена эта страница! ❤",
+                likes: 75,
+                liked: true
+            }
+        ];
 
-    
-    addCommentButton.addEventListener('click', function () {
-      
-      if (!nameInput.value || !commentInput.value) {
-        alert('Пожалуйста, заполните все поля.');
-        return;
-      }
+        const commentsList = document.getElementById('comments-list');
+        const addCommentButton = document.getElementById('add-comment-button');
+        const nameInput = document.querySelector('.add-form-name');
+        const commentInput = document.querySelector('.add-form-text');
 
-      
-      const currentDate = new Date().toLocaleString();
+        function renderComments() {
+            commentsList.innerHTML = '';
+            comments.forEach((comment, index) => {
+                const li = document.createElement('li');
+                li.className = 'comment';
+                li.innerHTML = `
+                    <div class="comment-header">
+                        <div>${comment.name}</div>
+                        <div>${comment.date}</div>
+                    </div>
+                    <div class="comment-body">
+                        <div class="comment-text">${comment.text}</div>
+                    </div>
+                    <div class="comment-footer">
+                        <div class="likes">
+                            <span class="likes-counter">${comment.likes}</span>
+                            <button class="like-button ${comment.liked ? 'like-button-active-like' : ''}" data-index="${index}"></button>
+                        </div>
+                    </div>
+                `;
+                commentsList.appendChild(li);
+            });
+        }
 
-      
-      const newComment = ` <li class="comment"> 
-        <div class="comment-header"> 
-          <div>${nameInput.value}</div> 
-          <div>${currentDate}</div> 
-          </div> 
-          <div class="comment-body"> 
-          <div class="comment-text"> ${commentInput.value} </div> </div> 
-          <div class="comment-footer"> 
-          <div class="likes"> 
-            <span class="likes-counter">0</span> 
-          <button class="like-button"></button> 
-          </div> 
-          </div> 
-          </li> `;
+        function toggleLike(index) {
+            const comment = comments[index];
+            comment.liked = !comment.liked;
+            comment.likes += comment.liked ? 1 : -1; 
+            renderComments();
+        }
 
-      
-          commentsList.innerHTML += newComment;
+        commentsList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('like-button')) {
+                const index = event.target.dataset.index;
+                toggleLike(index);
+            }
+        });
 
-      
-      nameInput.value = '';
-      commentInput.value = '';
-    });
-  });
+        addCommentButton.addEventListener('click', function () {
+            if (!nameInput.value || !commentInput.value) {
+                alert('Пожалуйста, заполните все поля.');
+                return;
+            }
 
-  //DOM2
-  const comments = [
-    {
-        name: "Глеб Фокин",
-        date: "12.02.22 12:18",
-        text: "Это будет первый комментарий на этой странице",
-        likes: 3,
-        liked: false
-    },
-    {
-        name: "Варвара Н.",
-        date: "13.02.22 19:22",
-        text: "Мне нравится как оформлена эта страница! ❤",
-        likes: 75,
-        liked: true
-    }
-];
+            const currentDate = new Date().toLocaleString();
+            const newComment = {
+                name: nameInput.value,
+                date: currentDate,
+                text: commentInput.value,
+                likes: 0,
+                liked: false
+            };
+            
+            comments.push(newComment);
+            renderComments(); 
 
-const commentsList = document.getElementById('comments-list');
+            nameInput.value = '';
+            commentInput.value = '';
+        });
 
-function renderComments() {
-    commentsList.innerHTML = '';
-    comments.forEach((comment, index) => {
-        const li = document.createElement('li');
-        li.className = 'comment';
-        li.innerHTML = `
-            <div class="comment-header">
-                <div>${comment.name}</div>
-                <div>${comment.date}</div>
-            </div>
-            <div class="comment-body">
-                <div class="comment-text">${comment.text}</div>
-            </div>
-            <div class="comment-footer">
-                <div class="likes">
-                    <span class="likes-counter">${comment.likes}</span>
-                    <button class="like-button ${comment.liked ? 'active' : ''}" data-index="${index}"></button>
-                </div>
-            </div>
-        `;
-        commentsList.appendChild(li);
-    });
-}
+        renderComments();
+    </script>
 
-function toggleLike(index) {
-    const comment = comments[index];
-    comment.liked = !comment.liked;
-    comment.likes += comment.liked ? 1 : -1; 
-    renderComments();
-}
-
-commentsList.addEventListener('click', (event) => {
-    if (event.target.classList.contains('like-button')) {
-        const index = event.target.dataset.index;
-        toggleLike(index);
-    }
-});
-
-renderComments();
-</script>
 </html>
