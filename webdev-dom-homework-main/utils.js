@@ -1,5 +1,5 @@
 export function escapeHtml(unsafe) {
-    return unsafe
+  return unsafe
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
