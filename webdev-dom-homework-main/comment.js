@@ -1,41 +1,32 @@
 import { renderComments } from "./dom.js";
 import { escapeHtml } from "./utils.js";
+import { fetchComments, postComment } from "./api.js";
 
-let comments = [
-  {
-    name: "Глеб Фокин",
-    date: "12.02.22 12:18",
-    text: "Это будет первый комментарий на этой странице",
-    likes: 3,
-    liked: false,
-  },
-  {
-    name: "Варвара Н.",
-    date: "13.02.22 19:22",
-    text: "Мне нравится как оформлена эта страница! ❤",
-    likes: 75,
-    liked: true,
-  },
-];
+let comments = [];
+
+
+export const updateComments = (newComments) => {
+  comments = newComments;
+};
+
 
 export function toggleLike(index) {
   const comment = comments[index];
-  comment.liked = !comment.liked;
-  comment.likes += comment.liked ? 1 : -1;
+  comment.isLiked = !comment.isLiked;
+  comment.likes += comment.isLiked ? 1 : -1;
   renderComments(comments);
 }
 
-export function addNewComment(name, text) {
-  const currentDate = new Date().toLocaleString();
-  const newComment = {
-    name: escapeHtml(name),
-    date: currentDate,
-    text: escapeHtml(text),
-    likes: 0,
-    liked: false,
-  };
-  comments.push(newComment);
-  renderComments(comments);
+
+export async function addNewComment(name, text) {
+  try {
+    const currentDate = new Date().toISOString();
+    await postComment(escapeHtml(text), escapeHtml(name));
+    comments = await fetchComments();
+    renderComments(comments);
+  } catch (error) {
+    console.error("Ошибка добавления комментария:", error);
+  }
 }
 
 export default comments;

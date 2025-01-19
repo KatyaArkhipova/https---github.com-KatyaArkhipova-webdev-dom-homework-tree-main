@@ -1,5 +1,10 @@
 import { renderComments } from "./dom.js";
-import comments from "./comment.js";
+import { fetchComments } from "./api.js";
 import "./events.js";
 
-renderComments(comments);
+async function initializeApp() {
+  const comments = await fetchComments();
+  renderComments(comments);
+}
+
+initializeApp(); 
