@@ -7,4 +7,4 @@ async function initializeApp() {
   renderComments(comments);
 }
 
-initializeApp(); 
+initializeApp();
