@@ -22,15 +22,9 @@ export const fetchComments = () => {
 export const postComment = (text, name) => {
     return fetch(host + '/comments', {
         method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json' 
-        },
         body: JSON.stringify({
-            author: { 
-                name: name
-            },
-            date: new Date().toISOString(),
-            text: text,
+            text,
+            name,
         }),
     }).then(() => {
         return fetchComments()

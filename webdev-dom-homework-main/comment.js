@@ -20,7 +20,7 @@ export function toggleLike(index) {
 
 export async function addNewComment(name, text) {
   try {
-    const currentDate = new Date().toISOString();
+    
     await postComment(escapeHtml(text), escapeHtml(name));
     comments = await fetchComments();
     renderComments(comments);
