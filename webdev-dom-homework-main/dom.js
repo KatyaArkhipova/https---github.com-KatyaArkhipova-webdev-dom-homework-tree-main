@@ -15,7 +15,19 @@ export function renderComments(comments) {
   comments.forEach((comment, index) => {
     const li = document.createElement("li");
     li.className = "comment";
-    li.innerHTML = ` <div class="comment-header"> <div>${escapeHtml(comment.name)}</div> <div>${comment.date}</div> </div> <div class="comment-body"> <div class="comment-text">${escapeHtml(comment.text)}</div> </div> <div class="comment-footer"> <div class="likes"> <span class="likes-counter">${comment.likes}</span> <button class="like-button ${comment.liked ? "like-button-active-like" : ""}" data-index="${index}"></button> </div> </div> `;
+    li.innerHTML = ` <div class="comment-header"> 
+    <div>${escapeHtml(comment.name)}</div> 
+    <div>${comment.date}</div> 
+    </div> 
+    <div class="comment-body"> 
+    <div class="comment-text">${escapeHtml(comment.text)}</div> 
+    </div> 
+    <div class="comment-footer"> 
+    <div class="likes"> 
+    <span class="likes-counter">${comment.likes}</span> 
+    <button class="like-button ${comment.isLiked? "like-button-active-like" : ""}" data-index="${index}"></button> 
+    </div> 
+    </div> `;
     commentsList.appendChild(li);
   });
 }

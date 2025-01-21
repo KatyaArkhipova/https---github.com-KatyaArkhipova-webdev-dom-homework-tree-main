@@ -1,6 +1,7 @@
-import { getElements } from "./dom.js";
+import { getElements, renderComments } from "./dom.js";
 import { toggleLike, addNewComment } from "./comment.js";
 import comments from "./comment.js";
+
 
 const { commentsList, addCommentButton, nameInput, commentInput } =
   getElements();
@@ -28,8 +29,10 @@ addCommentButton.addEventListener("click", function () {
     return;
   }
 
+  
   addNewComment(nameInput.value, commentInput.value);
 
   nameInput.value = "";
   commentInput.value = "";
 });
+

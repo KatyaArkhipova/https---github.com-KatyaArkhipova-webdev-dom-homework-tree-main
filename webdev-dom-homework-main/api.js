@@ -14,19 +14,19 @@ export const fetchComments = () => {
                 likes: comment.likes,
                 isLiked: false,
             }
-        })
-        return appComments
-    })
+        });
+        return appComments;
+    });
 }
 
 export const postComment = (text, name) => {
     return fetch(host + '/comments', {
         method: 'POST', 
         body: JSON.stringify({
-            text,
-            name,
+             text,
+             name,
         }),
-    }).then(() => {
-        return fetchComments()
-    })
-}
+    });
+};
+
+
