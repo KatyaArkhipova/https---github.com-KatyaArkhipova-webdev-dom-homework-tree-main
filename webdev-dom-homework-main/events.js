@@ -29,9 +29,11 @@ addCommentButton.addEventListener("click", function () {
     return;
   }
 
-  
-  addNewComment(nameInput.value, commentInput.value);
+  document.querySelector(".form-loading").style.display = "block"
+  document.querySelector(".add-form").style.display = "none" 
 
+  addNewComment(nameInput.value, commentInput.value);
+  
   nameInput.value = "";
   commentInput.value = "";
 });

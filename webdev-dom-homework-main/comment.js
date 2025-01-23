@@ -20,12 +20,17 @@ export function toggleLike(index) {
 
 export async function addNewComment(name, text) {
   try {
-    
     await postComment(escapeHtml(text), escapeHtml(name));
     comments = await fetchComments();
     renderComments(comments);
+
+    document.querySelector(".form-loading").style.display = "none";
+    document.querySelector(".add-form").style.display = "flex";
   } catch (error) {
     console.error("Ошибка добавления комментария:", error);
+
+    document.querySelector(".form-loading").style.display = "none";
+    document.querySelector(".add-form").style.display = "flex";
   }
 }
 

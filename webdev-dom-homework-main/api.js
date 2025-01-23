@@ -2,9 +2,7 @@ const host= "https://wedev-api.sky.pro/api/v1/katya-arkhipova"
 
 export const fetchComments = () => {
     return fetch(host + '/comments')
-    .then((res) => {
-        return res.json()
-    })
+    .then(res => res.json())
     .then((responseData) => {
         const appComments = responseData.comments.map(comment => {
             return {
