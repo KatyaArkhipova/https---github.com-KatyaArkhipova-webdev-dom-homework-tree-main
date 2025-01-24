@@ -4,7 +4,6 @@ import { fetchComments, postComment } from "./api.js";
 
 let comments = [];
 
-
 export const updateComments = (newComments) => {
   comments = newComments;
 };
@@ -19,18 +18,44 @@ export function toggleLike(index) {
 
 
 export async function addNewComment(name, text) {
+
+  const nameInput = document.querySelector('.add-form-name');
+  const textInput = document.querySelector('.add-form-text');
+
+  
+  const originalName = nameInput.value;
+  const originalText = textInput.value;
+
   try {
     await postComment(escapeHtml(text), escapeHtml(name));
     comments = await fetchComments();
     renderComments(comments);
 
-    document.querySelector(".form-loading").style.display = "none";
-    document.querySelector(".add-form").style.display = "flex";
-  } catch (error) {
-    console.error("Ошибка добавления комментария:", error);
+    nameInput.value = '';
+    textInput.value = '';
 
     document.querySelector(".form-loading").style.display = "none";
     document.querySelector(".add-form").style.display = "flex";
+  } 
+  catch (error)  {
+    document.querySelector(".form-loading").style.display = "none";
+    document.querySelector(".add-form").style.display = "flex";
+
+    nameInput.value = originalName;
+    textInput.value = originalText;
+
+    if (error.message === "Failed to fetch") {
+      alert("Кажется, у вас сломался интернет, попробуйте позже")
+    }
+
+    if (error.message === "Ошибка сервера") {
+      alert("Ошибка сервера")
+    }
+
+    if (error.message === "Неверный запрос") {
+      alert("Имя и комментарий должны быть не менее 3-х символов")
+    }
+  
   }
 }
 
