@@ -1,4 +1,4 @@
-import { escapeHtml } from "./utils.js";
+import { escapeHtml, formatDate } from "./utils.js";
 
 export function getElements() {
   const commentsList = document.getElementById("comments-list");
@@ -15,9 +15,12 @@ export function renderComments(comments) {
   comments.forEach((comment, index) => {
     const li = document.createElement("li");
     li.className = "comment";
+
+    const displayDate = formatDate(comment.date);
+
     li.innerHTML = ` <div class="comment-header"> 
     <div>${escapeHtml(comment.name)}</div> 
-    <div>${comment.date}</div> 
+    <div>${displayDate}</div> 
     </div> 
     <div class="comment-body"> 
     <div class="comment-text">${escapeHtml(comment.text)}</div> 

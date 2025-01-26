@@ -3,6 +3,7 @@ import { updateComments } from "./comment.js";
 import { fetchComments } from "./api.js";
 import "./events.js";
 
+
 document.querySelector(".comments").innerHTML =
 "Пожалуйста подождите, загружаю комментарий..."
 

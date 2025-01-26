@@ -26,6 +26,9 @@ export async function addNewComment(name, text) {
   const originalName = nameInput.value;
   const originalText = textInput.value;
 
+  const formLoadingElement = document.querySelector(".form-loading");
+  const addFormElement = document.querySelector(".add-form");
+
   try {
     await postComment(escapeHtml(text), escapeHtml(name));
     comments = await fetchComments();
@@ -34,12 +37,12 @@ export async function addNewComment(name, text) {
     nameInput.value = '';
     textInput.value = '';
 
-    document.querySelector(".form-loading").style.display = "none";
-    document.querySelector(".add-form").style.display = "flex";
+    formLoadingElement.style.display = "none";
+    addFormElement.style.display = "flex";
   } 
   catch (error)  {
-    document.querySelector(".form-loading").style.display = "none";
-    document.querySelector(".add-form").style.display = "flex";
+    formLoadingElement.style.display = "none";
+    addFormElement.style.display = "flex";
 
     nameInput.value = originalName;
     textInput.value = originalText;
