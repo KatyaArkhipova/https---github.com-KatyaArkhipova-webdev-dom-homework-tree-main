@@ -9,7 +9,6 @@ import "./events.js"
 async function initializeApp() {
 const comments = await fetchComments();
 updateComments(comments);
-//renderComments(comments);
 renderAddCommentForm(name, comments)
 
 }

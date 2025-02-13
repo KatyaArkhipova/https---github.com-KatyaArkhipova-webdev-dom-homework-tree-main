@@ -28,6 +28,7 @@ export const fetchComments = () => {
     });
 }
 
+
 export const postComment = (text, name) => {
     return fetch(host + '/comments', {
         method: 'POST',

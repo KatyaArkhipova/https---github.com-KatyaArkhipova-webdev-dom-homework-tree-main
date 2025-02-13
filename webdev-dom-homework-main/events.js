@@ -1,12 +1,13 @@
-import { getElements, renderAddCommentForm } from "./dom.js";
-import { toggleLike, addNewComment } from "./comment.js";
-import comments from "./comment.js";
+import { getElements } from "./dom.js";
+import { toggleLike, addNewComment, getComments } from "./comment.js";
 
 
 
-//const { commentsList, addCommentButton, nameInput, commentInput } =
-  getElements();
+
+
+  
   export function replyEvent () {
+    const comments = getComments()
     const commentsList = document.getElementById("comments-list");
     commentsList.addEventListener("click", (event) => {
   if (event.target.classList.contains("like-button")) {
@@ -15,14 +16,15 @@ import comments from "./comment.js";
   } else if (event.target.closest(".comment")) {
     const comment = event.target.closest(".comment");
     const index = Array.from(commentsList.children).indexOf(comment);
+    
     const author = comments[index].name;
     const text = comments[index].text;
-    console.log(`Replying to comment from ${author}: ${text}`);
+    
 
-    const nameInput = document.querySelector(".add-form-name");
+    
     const commentInput = document.querySelector(".add-form-text");
     commentInput.value = `@${author}: ${text}`;
-    nameInput.value = "";
+    
     commentInput.focus();
   }
 });

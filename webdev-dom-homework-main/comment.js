@@ -1,6 +1,6 @@
 import { renderAddCommentForm } from "./dom.js";
 import { escapeHtml } from "./utils.js";
-import { fetchComments, postComment } from "./api.js";
+import { fetchComments, name, postComment } from "./api.js";
 
 
 let comments = [];
@@ -16,8 +16,7 @@ export function toggleLike(index) {
   const comment = comments[index];
   comment.isLiked = !comment.isLiked;
   comment.likes += comment.isLiked ? 1 : -1;
-  //renderComments(comments);
-  renderAddCommentForm(comments)
+  renderAddCommentForm(name,comments)
 }
 
 
@@ -36,9 +35,9 @@ export async function addNewComment(name, text) {
   try {
     await postComment(escapeHtml(text), escapeHtml(name));
     comments = await fetchComments();
-    renderAddCommentForm(comments);
+    renderAddCommentForm(name, comments);
     replyEvent();
-    //renderComments(comments);
+    
     
 
     nameInput.value = '';
